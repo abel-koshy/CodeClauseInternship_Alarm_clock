@@ -1,0 +1,55 @@
+html {
+    background: linear-gradient(to top, black, white);
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+} 
+.selector {
+    align-items: center;
+}
+
+form {
+    align-content: center;
+    text-align: center;
+    margin:auto;
+}
+
+.subbut {
+
+    margin-top: 20px;
+    width: 56px;
+    height: 25px;
+    margin-bottom: 10px;
+
+
+}
+.head{ 
+    align-items: center;
+    justify-content: center;
+}
+.hidden {
+    display: none;
+    margin-top: 20px;
+}
+.note{
+    font-size: xx-small;
+}
+
+.c1{
+    margin: auto;
+    justify-content: center;
+    border-style:solid;
+    border-width:2.5px ;
+    border-radius: 15px;
+    border-color: black;
+    height: auto;
+    width: fit-content;
+    padding: 2%;
+
+}
+
+
+.selectbox{
+    width:40px;
+}
+ 

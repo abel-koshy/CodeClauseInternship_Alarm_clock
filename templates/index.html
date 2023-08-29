@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+
+<body>
+    <center><h1>Alarm Clock</h1></center>
+    <div class="c1" name="c1">
+    <form method="POST" action="/">
+        <p>Choose an option</p>
+
+            <input type="radio" name="choice" value="div1" required> Set alarm at a specific time<br>
+            <input type="radio" name="choice" value="div2" required> Set countdown timer<br>
+             
+        <div id="div1" class="hidden">
+            <label for="alarm_time">Enter the alarm time in 24-hour format:</label>
+            <input type="number" id="alarm_timehh" class="selectbox" min="0" max="23" placeholder="MM" name="alarm_timehh" step="1">
+            <input type="number" id="alarm_timemm" class="selectbox" min="0" max="59" placeholder="HH" name="alarm_timemm" step="1">
+        </div>
+
+        <div id="div2" class="hidden">
+            <label for="countdown">Enter the countdown timer in seconds:</label>
+            <input type="number" class="selectbox" id="countdownmm" name="countdownmm" min="0" placeholder="min">
+            <input type="number" class="selectbox" id="countdownss" name="countdownss" min="1" placeholder="sec">
+        </div>
+       
+        <br>
+        
+        <button type="submit">Submit</button>
+    </form>
+    <p id="message" class="mess" >{{ message }}</p>
+    <div id="value-container"></div>
+    <center><div class="note">Note: there can only be one timer/alarm at a time</div></center>
+</div>
+    <script>
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+            const divs = document.querySelectorAll('.hidden');
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    divs.forEach(div => {
+                        div.style.display = 'none';
+                    });
+
+                    const selectedDivId = this.value;
+                    console.log(selectedDivId);
+                    const selectedDiv = document.getElementById(selectedDivId);
+                    selectedDiv.style.display = 'block';
+                });
+            });
+    </script>
+
+    <script>
+        let resp = 0;
+        let alarmTriggered = false; 
+        let mes = document.getElementById("message");
+
+        function fetchVariable() {
+            fetch('/check')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.value > 0 && !alarmTriggered) {
+                        // Set the flag and show a pop-up
+                        mes.style.display = 'none';
+                        alarmTriggered = true;
+                        alert('Alarm Triggered');
+                    }
+                    resp = data.value;
+                })
+                .catch(error => {
+                    console.error('Error fetching variable:', error);
+                });
+        }
+
+        setInterval(fetchVariable, 500);
+    </script>
+
+</body>
+
+
+</html>
